@@ -5,9 +5,11 @@ import { PRODUCTS } from '@/mocks';
 import ProductList from '../components/ProductList';
 import SearchBar from '../components/SearchBar';
 import CategoryFilter from '../components/CategoryFilter';
+import { getAllProducts } from '@/server/getAllProducts/getAllProducts';
+import { getCategories } from '@/server/getCategories/getCategories';
 
 const Home = () => {
-  const [products, setProducts] = useState<any>(PRODUCTS);
+  const [products, setProducts] = useState<any>([]);
   const [filteredProducts, setFilteredProducts] = useState<any>([]);
   const [categories, setCategories] = useState<any>([]);
   const [query, setQuery] = useState('');
@@ -15,12 +17,11 @@ const Home = () => {
 
   useEffect(() => {
     const loadProducts = async () => {
-      const data = PRODUCTS;
-      setProducts(data);
-      setFilteredProducts(data);
-
-      const productCategories = [...new Set(data.map((product) => product.category))];
-      setCategories(productCategories);
+      const { products } = await getAllProducts();
+      const { categories } = await getCategories();
+      setProducts(products);
+      setFilteredProducts(products);
+      setCategories(categories);
     };
 
     loadProducts();

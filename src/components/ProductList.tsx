@@ -8,7 +8,7 @@ const ProductList = ({ products }: any) => {
 
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-      {products.map((product: any) => (
+      {products && products.map((product: any) => (
         <ProductCard product={product} handleClick={handleClick} key={product.id}/>
       ))}
     </div>
